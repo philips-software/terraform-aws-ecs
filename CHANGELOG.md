@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Slack badge in documentation
 - Updated base images to 2017.9.g
 - Refactored module to replace duplicated policies by inline policies
 - Replace resources to remove deprecated warnins
