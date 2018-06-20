@@ -4,11 +4,9 @@ This directory contains a test setup for an ECS cluster. Once applied one servic
 
 Execute the steps below to setup the cluster.
 
-## Start terraform docker container to execute terraform scripts
-```
-docker run --env-file $HOME/.aws/<AWS_KEYS> \
-             -v $(pwd):/data --workdir=/data --entrypoint=/bin/bash -it --rm digilabs/terraform:0.9.9
-```
+## Prerequisites for running the example
+Terraform is managed via the tool `tfenv`. Ensure you have installed [tfenv](https://github.com/kamatama41/tfenv). And install via tfenv the required terraform version as listed in `.terraform-version`
+
 ## Generate ssh and init terraform
 
 ```
