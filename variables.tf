@@ -4,7 +4,7 @@ variable "aws_region" {
 }
 
 variable "environment" {
-  description = "Name of the environment (e.g. cheetah-dev); will be prefixed to all resources."
+  description = "Name of the environment; will be prefixed to all resources."
   type        = "string"
 }
 
@@ -53,25 +53,25 @@ variable "subnet_ids" {
 
 // http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html
 variable "ecs_optimized_amis" {
-  description = "List with ecs optimized images per region, last updated on: 2018-01-19 (2017.09.g)."
+  description = "List with ecs optimized images per region, last updated on: 2018-06-20 (2018.03.a)."
   type        = "map"
 
   default = {
-    us-east-1      = "ami-28456852" # N. Virginia
-    us-east-2      = "ami-ce1c36ab"
-    us-west-1      = "ami-74262414" # N. California
-    us-west-2      = "ami-decc7fa6" # Oregon
-    eu-west-1      = "ami-1d46df64" # Ireland
-    eu-west-2      = "ami-67cbd003"
-    eu-west-3      = "ami-9aef59e7" # Paris
-    eu-central-1   = "ami-509a053f" # Frankfurt
-    ap-northeast-1 = "ami-872c4ae1" # Tokyo
-    ap-northeast-2 = "ami-c212b2ac"
-    ap-southeast-1 = "ami-910d72ed" # Singapore
-    ap-southeast-2 = "ami-58bb443a" # Sydney
-    ca-central-1   = "ami-435bde27"
-    ap-south-1     = "ami-00491f6f"
-    sa-east-1      = "ami-af521fc3"
+    us-east-1      = "ami-5253c32d" # N. Virginia
+    us-east-2      = "ami-956e52f0"
+    us-west-1      = "ami-6b81980b" # N. California
+    us-west-2      = "ami-d2f489aa" # Oregon
+    eu-west-1      = "ami-c91624b0" # Ireland
+    eu-west-2      = "ami-3622cf51"
+    eu-west-3      = "ami-ca75c4b7" # Paris
+    eu-central-1   = "ami-10e6c8fb" # Frankfurt
+    ap-northeast-1 = "ami-f3f8098c" # Tokyo
+    ap-northeast-2 = "ami-7c69c112"
+    ap-southeast-1 = "ami-b75a6acb" # Singapore
+    ap-southeast-2 = "ami-bc04d5de" # Sydney
+    ca-central-1   = "ami-da6cecbe"
+    ap-south-1     = "ami-c7072aa8"
+    sa-east-1      = "ami-a1e2becd"
   }
 }
 

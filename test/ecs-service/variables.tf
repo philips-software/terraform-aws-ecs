@@ -34,5 +34,5 @@ variable "container_memory_reservation" {
 }
 
 variable "image_url" {
-  default = "npalm/blog:latest"
+  default = "npalm/040code.github.io:latest"
 }

@@ -1,12 +1,9 @@
 module "vpc" {
-  source  = "github.com/philips-software/terraform-aws-vpc"
+  source  = "philips-software/vpc/aws"
   version = "1.0.0"
 
   environment = "${var.environment}"
   aws_region  = "${var.aws_region}"
-
-  availability_zone_subnet_a = "eu-west-1a"
-  availability_zone_subnet_b = "eu-west-1b"
 }
 
 resource "aws_key_pair" "key" {
@@ -40,21 +37,20 @@ module "ecs-cluster" {
 
   instance_type = "t2.micro"
 
-  subnet_ids = "${module.vpc.private_subnet_a_id},${module.vpc.private_subnet_b_id}"
+  subnet_ids = "${join(",", module.vpc.private_subnets)}"
 
   project = "${var.project}"
 }
 
 module "blog" {
-  source = "ecs-service" 
+  source = "ecs-service"
+
   // This is included in this test directory. You can also use: https://github.com/philips-software/terraform-aws-ecs-service
 
-  aws_region  = "${var.aws_region}"
-  environment = "${var.environment}"
-
-  vpc_id         = "${module.vpc.vpc_id}"
-  public_subnets = "${module.vpc.public_subnet_a_id},${module.vpc.public_subnet_b_id}"
-
+  aws_region            = "${var.aws_region}"
+  environment           = "${var.environment}"
+  vpc_id                = "${module.vpc.vpc_id}"
+  public_subnets        = "${join(",", module.vpc.public_subnets)}"
   cluster_id            = "${module.ecs-cluster.id}"
   ecs_service_role_name = "${module.ecs-cluster.service_role_name}"
   service_name          = "blog"
