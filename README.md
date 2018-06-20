@@ -1,17 +1,15 @@
 # Terraform module for creating a ecs cluster
 
-This module creates one ecs cluster in a private vpc zone.
-This module requires user-data as input.
+This module creates one ecs cluster in a private vpc zone. This module requires user-data as input.
 
 *Note:* this modules requires terraform 0.8 or higher.
 
-*Note:* This version duplicates the policy documents for the roles since the solution in version 1.11.2-5 and -6 seems not working.
 
 ## Usage
 Example usages:
 ```
 module "ecs-cluster" {
-    source = "github.com/philips-software/terraform-aws-ecs"
+    source = "philips-software/ecs/aws"
     version = "1.0.0"
 
     aws_region = "eu-west-1"
@@ -28,7 +26,7 @@ module "ecs-cluster" {
 
     subnet_ids = "${module.vpc.private_subnet_a_id},${module.vpc.private_subnet_b_id}"
 
-     user_data = "${data.template_file.ecs-instance-template.rendered}"
+    user_data = "${data.template_file.ecs-instance-template.rendered}"
 
     // optional variables
     min_instance_count = "1"
@@ -53,7 +51,7 @@ data "template_file" "ecs-instance-template" {
 | aws_region | The Amazon region: currently North Virginia [us-east-1]. | string | - | yes |
 | desired_instance_count | The desired instance count in the cluster. | string | `1` | no |
 | ecs_optimized_amis | List with ecs optimized images per region, last updated on: 2018-01-19 (2017.09.g). | map | `<map>` | no |
-| environment | Name of the environment (e.g. cheetah-dev); will be prefixed to all resources. | string | - | yes |
+| environment | Name of the environment; will be prefixed to all resources. | string | - | yes |
 | instance_type | The instance type used in the cluster. | string | - | yes |
 | key_name | The AWS keyname, used to create instances. | string | - | yes |
 | max_instance_count | The maximum instance count in the cluster. | string | `1` | no |
