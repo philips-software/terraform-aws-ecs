@@ -20,7 +20,7 @@ data "template_file" "ecs-instance-user-data" {
 }
 
 module "ecs-cluster" {
-  source    = "../"
+  source    = "../../"
   user_data = "${data.template_file.ecs-instance-user-data.rendered}"
 
   aws_region  = "${var.aws_region}"
