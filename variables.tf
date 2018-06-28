@@ -57,21 +57,23 @@ variable "ecs_optimized_amis" {
   type        = "map"
 
   default = {
-    us-east-1      = "ami-5253c32d" # N. Virginia
-    us-east-2      = "ami-956e52f0"
-    us-west-1      = "ami-6b81980b" # N. California
-    us-west-2      = "ami-d2f489aa" # Oregon
-    eu-west-1      = "ami-c91624b0" # Ireland
-    eu-west-2      = "ami-3622cf51"
-    eu-west-3      = "ami-ca75c4b7" # Paris
-    eu-central-1   = "ami-10e6c8fb" # Frankfurt
-    ap-northeast-1 = "ami-f3f8098c" # Tokyo
-    ap-northeast-2 = "ami-7c69c112"
-    ap-southeast-1 = "ami-b75a6acb" # Singapore
-    ap-southeast-2 = "ami-bc04d5de" # Sydney
-    ca-central-1   = "ami-da6cecbe"
-    ap-south-1     = "ami-c7072aa8"
-    sa-east-1      = "ami-a1e2becd"
+    us-east-1      = "ami-5253c32d" # US East (N. Virginia)
+    us-east-2      = "ami-956e52f0" # US East (Ohio)
+    us-west-1      = "ami-6b81980b" # US West (N. California)
+    us-west-2      = "ami-d2f489aa" # US West (Oregon)
+    ca-central-1   = "ami-da6cecbe" # Canada (Central)
+    eu-west-1      = "ami-c91624b0" # EU (Ireland)
+    eu-west-2      = "ami-3622cf51" # EU (London)
+    eu-west-3      = "ami-ca75c4b7" # EU (Paris)
+    eu-central-1   = "ami-10e6c8fb" # EU (Frankfurt)
+    ap-northeast-1 = "ami-f3f8098c" # Asia Pacific (Tokyo)
+    ap-northeast-2 = "ami-7c69c112" # Asia Pacific (Seoul)
+    ap-southeast-1 = "ami-b75a6acb" # Asia Pacific (Singapore)
+    ap-southeast-2 = "ami-bc04d5de" # Asia Pacific (Sydney)
+    ca-central-1   = "ami-da6cecbe" # Canada (Central)
+    ap-south-1     = "ami-c7072aa8" # Asia Pacific (Mumbai)
+    sa-east-1      = "ami-a1e2becd" # South America (São Paulo)
+    us-gov-west-1  = "ami-a1e2becd" # GovCloud
   }
 }
 
