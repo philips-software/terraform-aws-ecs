@@ -5,7 +5,7 @@ terraform {
 # EC2
 
 resource "aws_autoscaling_group" "ecs_instance" {
-  name                      = "${var.environment}-as-group"
+  name                      = "${var.environment}-ecs-cluster-as-group"
   vpc_zone_identifier       = ["${split(",", var.subnet_ids)}"]
   min_size                  = "${var.min_instance_count}"
   max_size                  = "${var.max_instance_count}"
