@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Update naming of the autoscaling group to be consistent with the other naming conventions.
 - Slack badge in documentation
 - Updated base images to 2017.9.g
 - Refactored module to replace duplicated policies by inline policies

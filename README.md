@@ -7,19 +7,23 @@ This module creates one ecs cluster in a private vpc zone. This module requires 
 
 ## Usage
 Example usages:
+
 ```
 module "ecs-cluster" {
     source = "philips-software/ecs/aws"
     version = "1.0.0"
+    
+    # Or via github
+    # source = "github.com/philips-software/terraform-aws-ecs?ref=1.0.0"
 
-    aws_region = "eu-west-1"
+    aws_region  = "eu-west-1"
     environment = "my-environment-name"
-    project = "my project"
+    project     = "my project"
 
     key_name = "my-key"
 
     // see vpc module for an example
-    vpc_id = "${module.vpc.vpc_id}"
+    vpc_id   = "${module.vpc.vpc_id}"
     vpc_cidr = "${module.vpc.vpc_cidr}"
 
     instance_type = "t2.medium"
@@ -29,8 +33,8 @@ module "ecs-cluster" {
     user_data = "${data.template_file.ecs-instance-template.rendered}"
 
     // optional variables
-    min_instance_count = "1"
-    max_instance_count = "5"
+    min_instance_count     = "1"
+    max_instance_count     = "5"
     desired_instance_count = "1"
 
 }
