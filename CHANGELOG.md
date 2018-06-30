@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Removed unused, uneeded output variables
 - Removed unneeded input variables
 - Renamed output variables
+- Update of ECS optimized AMI's
 
 [Unreleased]: https://github.com/philips-software/terraform-aws-ecs/compare/1.0.0...HEAD
 
