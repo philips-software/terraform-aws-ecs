@@ -73,7 +73,7 @@ variable "ecs_optimized_amis" {
     ca-central-1   = "ami-da6cecbe" # Canada (Central)
     ap-south-1     = "ami-c7072aa8" # Asia Pacific (Mumbai)
     sa-east-1      = "ami-a1e2becd" # South America (São Paulo)
-    us-gov-west-1  = "ami-a1e2becd" # GovCloud
+    us-gov-west-1  = "ami-03920462" # GovCloud
   }
 }
 
