@@ -13,12 +13,12 @@ output "service_role_name" {
   value       = "${aws_iam_role.ecs_service.name}"
 }
 
-output "iam_instance_profile_name" {
-  description = ""
-  value       = "${aws_iam_instance_profile.ecs_instance.name}"
+output "iam_instance_profile_arn" {
+  description = "Created IAM instance profile."
+  value       = "${aws_iam_instance_profile.ecs_instance.arn}"
 }
 
 output "instance_sg_id" {
-  description = ""
+  description = "Created security group for cluster instances."
   value       = "${aws_security_group.instance_sg.id}"
 }
