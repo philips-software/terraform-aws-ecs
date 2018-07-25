@@ -40,6 +40,8 @@ module "ecs-cluster" {
   subnet_ids = "${join(",", module.vpc.private_subnets)}"
 
   project = "${var.project}"
+
+  tags = "${var.tags}"
 }
 
 module "blog" {
