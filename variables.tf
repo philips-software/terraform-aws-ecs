@@ -86,3 +86,9 @@ variable "user_data" {
   description = "The user-data for the ec2 instances"
   type        = "string"
 }
+
+variable "tags" {
+  type        = "map"
+  description = "Map of tags to apply on the resources"
+  default     = {}
+}
