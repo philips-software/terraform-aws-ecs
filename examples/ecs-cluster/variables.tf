@@ -18,3 +18,8 @@ variable "key_name" {
 variable "ssh_key_file_ecs" {
   default = "generated/id_rsa.pub"
 }
+
+variable "tags" {
+  type = "map"
+  default = {}
+}

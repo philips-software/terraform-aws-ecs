@@ -36,6 +36,10 @@ module "ecs-cluster" {
     min_instance_count     = "1"
     max_instance_count     = "5"
     desired_instance_count = "1"
+    
+    tags = {
+      my-tag = "my-tag-value"
+    }
 
 }
 
@@ -65,6 +69,7 @@ data "template_file" "ecs-instance-template" {
 | user_data | The user-data for the ec2 instances | string | - | yes |
 | vpc_cidr | The CIDR block of the VPC (e.g. 10.64.48.0/23). | string | - | yes |
 | vpc_id | The VPC to launch the instance in (e.g. vpc-66ecaa02). | string | - | yes |
+| tags | Map of tags to apply on the resources | map | <map> | no |
 
 ## Outputs
 
@@ -73,6 +78,8 @@ data "template_file" "ecs-instance-template" {
 | id | Id of the cluster. |
 | name | Name of the cluster. |
 | service_role_name | Created IAM service role name. |
+| iam_instance_profile_arn | Created IAM instance profile arn. |
+| instance_sg_id | Created security group for cluster instances. |
 
 ## Philips Forest
 

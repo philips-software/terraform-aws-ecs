@@ -53,7 +53,7 @@ variable "subnet_ids" {
 
 // http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html
 variable "ecs_optimized_amis" {
-  description = "List with ecs optimized images per region, last updated on: 2018-06-20 (2018.03.a)."
+  description = "List with ecs optimized images per region, last updated on: 2018-06-30 (2018.03.a)."
   type        = "map"
 
   default = {
@@ -73,7 +73,7 @@ variable "ecs_optimized_amis" {
     ca-central-1   = "ami-da6cecbe" # Canada (Central)
     ap-south-1     = "ami-c7072aa8" # Asia Pacific (Mumbai)
     sa-east-1      = "ami-a1e2becd" # South America (São Paulo)
-    us-gov-west-1  = "ami-a1e2becd" # GovCloud
+    us-gov-west-1  = "ami-03920462" # GovCloud
   }
 }
 
@@ -85,4 +85,10 @@ variable "project" {
 variable "user_data" {
   description = "The user-data for the ec2 instances"
   type        = "string"
+}
+
+variable "tags" {
+  type        = "map"
+  description = "Map of tags to apply on the resources"
+  default     = {}
 }
