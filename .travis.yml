@@ -2,11 +2,11 @@ dist: trusty
 sudo: false
 
 install:
-  - ./ci/bin/install.sh
+  - ./.ci/bin/install.sh
 
 jobs:
   include:
     - stage: verify
-      script: ./ci/bin/verify.sh
+      script: ./.ci/bin/verify.sh
     - stage: verify
-      script: ./ci/bin/verify-examples.sh examples
+      script: ./.ci/bin/verify-examples.sh examples
