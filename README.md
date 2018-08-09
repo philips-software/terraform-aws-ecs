@@ -86,6 +86,11 @@ data "template_file" "ecs-instance-template" {
 | iam_instance_profile_arn | Created IAM instance profile arn. |
 | instance_sg_id | Created security group for cluster instances. |
 
+## Automated checks
+Currently the automated checks are limited. In CI the following checks are done for the root and each example.
+- lint: `terraform validate` and `terraform fmt`
+- basic init / get check: `terraform init -get -backend=false -input=false`
+
 ## Philips Forest
 
 This module is part of the Philips Forest.
