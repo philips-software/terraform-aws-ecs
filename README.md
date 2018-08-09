@@ -1,18 +1,23 @@
 # Terraform module for creating a ecs cluster
 
-This module creates one ecs cluster in a private vpc zone. This module requires user-data as input.
+This [Terraform module]() creates a ECS container cluster in Amazon. Prerequisite is to have a a VPC available. The VPC can be create via the official verified [AWS VPC module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/1.37.0), or via the our own [VPC](https://github.com/philips-software/terraform-aws-vpc) module.
 
-*Note:* this modules requires terraform 0.8 or higher.
+The module creates a ECS cluster by default using one EC2 instance. No auto scaling is configured, currently scaling can only be done by change parameters, see examples below.
 
+*Note:* this modules requires terraform 0.8 or higher. Please see [the ECS example](examples/ecs-cluster/.terraform-version) for the current supported version.
+
+## Examples
+- [ECS cluster basic](examples/ecs-cluster-advanced) - This examples combines the usage of the VPC module, ECS cluster (this module), ECS service module, centralized logging.
+- [ECS cluster advanced](examples/ecs-cluster-advanced) - A slightly more advanced example. This examples combines the usage of the AWS VPC module, ECS cluster (this module), ECS service module, centralized logging and monitoring.
 
 ## Usage
-Example usages:
+Below an example usages. Complete examples are provided in the `examples` directory.
 
 ```
 module "ecs-cluster" {
     source = "philips-software/ecs/aws"
     version = "1.0.0"
-    
+
     # Or via github
     # source = "github.com/philips-software/terraform-aws-ecs?ref=1.0.0"
 
@@ -36,7 +41,7 @@ module "ecs-cluster" {
     min_instance_count     = "1"
     max_instance_count     = "5"
     desired_instance_count = "1"
-    
+
     tags = {
       my-tag = "my-tag-value"
     }
