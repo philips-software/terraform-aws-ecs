@@ -100,8 +100,7 @@ resource "aws_alb_listener" "main" {
   }
 }
 
-## CloudWatch Logs
-
+# CloudWatch Logs
 resource "aws_cloudwatch_log_group" "service" {
   name = "${var.environment}-ecs-group/${var.service_name}"
 }
