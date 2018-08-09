@@ -12,9 +12,10 @@ locals {
 
 data "null_data_source" "asg_tags" {
   count = "${length(local.asg_tags)}"
+
   inputs = {
-    key   = "${element(keys(local.asg_tags), count.index)}"
-    value = "${element(values(local.asg_tags), count.index)}"
+    key                 = "${element(keys(local.asg_tags), count.index)}"
+    value               = "${element(values(local.asg_tags), count.index)}"
     propagate_at_launch = "true"
   }
 }
