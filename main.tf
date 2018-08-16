@@ -3,6 +3,22 @@ terraform {
 }
 
 # EC2
+locals {
+  asg_tags = "${merge(map("Name", format("%s-ecs", var.environment)),
+              map("Environment", format("%s", var.environment)),
+              map("Project", format("%s", var.project)),
+              var.tags)}"
+}
+
+data "null_data_source" "asg_tags" {
+  count = "${length(local.asg_tags)}"
+
+  inputs = {
+    key                 = "${element(keys(local.asg_tags), count.index)}"
+    value               = "${element(values(local.asg_tags), count.index)}"
+    propagate_at_launch = "true"
+  }
+}
 
 resource "aws_autoscaling_group" "ecs_instance" {
   name                      = "${var.environment}-ecs-cluster-as-group"
@@ -12,24 +28,7 @@ resource "aws_autoscaling_group" "ecs_instance" {
   desired_capacity          = "${var.desired_instance_count}"
   health_check_grace_period = 300
   launch_configuration      = "${aws_launch_configuration.ecs_instance.name}"
-
-  tag {
-    key                 = "Name"
-    value               = "${var.environment}-ecs"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Environment"
-    value               = "${var.environment}"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "Project"
-    value               = "${var.project}"
-    propagate_at_launch = true
-  }
+  tags                      = ["${data.null_data_source.asg_tags.*.outputs}"]
 }
 
 resource "aws_launch_configuration" "ecs_instance" {
@@ -69,10 +68,10 @@ resource "aws_security_group" "instance_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    Name        = "${var.environment}-ecs-cluster-sg"
-    Environment = "${var.environment}"
-  }
+  tags = "${merge(map("Name", format("%s-ecs-cluster-sg", var.environment)),
+            map("Environment", format("%s", var.environment)),
+            map("Project", format("%s", var.project)),
+            var.tags)}"
 }
 
 ## ECS

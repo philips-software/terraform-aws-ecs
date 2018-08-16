@@ -2,11 +2,11 @@ data "template_file" "ecs-instance-user-data" {
   template = "${file("${path.module}/user-data-ecs-cluster-instance.tpl")}"
 
   vars {
-    ecs_cluster_name = "${module.ecs-cluster.name}"
+    ecs_cluster_name = "${module.ecs_cluster.name}"
   }
 }
 
-module "ecs-cluster" {
+module "ecs_cluster" {
   source    = "../../"
   user_data = "${data.template_file.ecs-instance-user-data.rendered}"
 
@@ -16,7 +16,7 @@ module "ecs-cluster" {
   key_name = "${aws_key_pair.key.key_name}"
 
   vpc_id   = "${module.vpc.vpc_id}"
-  vpc_cidr = "${module.vpc.vpc_cidr}"
+  vpc_cidr = "${module.vpc.vpc_cidr_block}"
 
   min_instance_count     = "1"
   max_instance_count     = "1"
@@ -29,4 +29,8 @@ module "ecs-cluster" {
   project = "${var.project}"
 
   tags = "${var.tags}"
+}
+
+locals {
+  service_name = "blog"
 }
