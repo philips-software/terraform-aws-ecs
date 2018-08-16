@@ -20,7 +20,19 @@ data "null_data_source" "asg_tags" {
   }
 }
 
+resource "aws_autoscaling_group" "ecs_instance_dynamic" {
+  count                     = "${var.dynamic_scaling == "true" ? 1 : 0}"
+  name                      = "${var.environment}-ecs-cluster-as-group"
+  vpc_zone_identifier       = ["${split(",", var.subnet_ids)}"]
+  min_size                  = "${var.min_instance_count}"
+  max_size                  = "${var.max_instance_count}"
+  health_check_grace_period = 300
+  launch_configuration      = "${aws_launch_configuration.ecs_instance.name}"
+  tags                      = ["${data.null_data_source.asg_tags.*.outputs}"]
+}
+
 resource "aws_autoscaling_group" "ecs_instance" {
+  count                     = "${var.dynamic_scaling == "true" ? 0 : 1}"
   name                      = "${var.environment}-ecs-cluster-as-group"
   vpc_zone_identifier       = ["${split(",", var.subnet_ids)}"]
   min_size                  = "${var.min_instance_count}"
@@ -29,6 +41,26 @@ resource "aws_autoscaling_group" "ecs_instance" {
   health_check_grace_period = 300
   launch_configuration      = "${aws_launch_configuration.ecs_instance.name}"
   tags                      = ["${data.null_data_source.asg_tags.*.outputs}"]
+}
+
+resource "aws_autoscaling_policy" "scaleOut" {
+  count                     = "${var.dynamic_scaling == "true" ? 1 : 0}"
+  name                      = "ScaleOut"
+  scaling_adjustment        = "${abs(var.dynamic_scaling_adjustment)}"
+  policy_type               = "SimpleScaling"
+  adjustment_type           = "ChangeInCapacity"
+  cooldown                  = 600
+  autoscaling_group_name    = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
+}
+
+resource "aws_autoscaling_policy" "scaleIn" {
+  count                     = "${var.dynamic_scaling == "true" ? 1 : 0}"
+  name                      = "ScaleIn"
+  scaling_adjustment        = "${-1 * abs(var.dynamic_scaling_adjustment)}"
+  policy_type               = "SimpleScaling"
+  adjustment_type           = "ChangeInCapacity"
+  cooldown                  = 120
+  autoscaling_group_name    = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
 }
 
 resource "aws_launch_configuration" "ecs_instance" {

@@ -46,6 +46,18 @@ variable "desired_instance_count" {
   default     = "1"
 }
 
+variable "dynamic_scaling" {
+  type        = "string"
+  description = "Enable/disable dynamic scaling of the auto scaling group."
+  default     = "false"
+}
+
+variable "dynamic_scaling_adjustment" {
+  type        = "string"
+  description = "The adjustment in number of instances for dynamic scaling."
+  default     = "1"
+}
+
 variable "subnet_ids" {
   type        = "string"
   description = "List of subnets ids on which the instances will be launched."

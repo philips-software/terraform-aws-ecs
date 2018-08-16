@@ -71,6 +71,8 @@ data "template_file" "ecs-instance-template" {
 | max_instance_count | The maximum instance count in the cluster. | string | `1` | no |
 | min_instance_count | The minimal instance count in the cluster. | string | `1` | no |
 | project | Project identifier | string | - | yes |
+| dynamic_scaling | Enable/disable dynamic scaling of the auto scaling group. | string | '1' | no |
+| dynamic_scaling_adjustment | The adjustment in number of instances for dynamic scaling. | string | 'false' | no |
 | subnet_ids | List of subnets ids on which the instances will be launched. | string | - | yes |
 | user_data | The user-data for the ec2 instances | string | - | yes |
 | vpc_cidr | The CIDR block of the VPC (e.g. 10.64.48.0/23). | string | - | yes |
@@ -86,6 +88,9 @@ data "template_file" "ecs-instance-template" {
 | service_role_name | Created IAM service role name. |
 | iam_instance_profile_arn | Created IAM instance profile arn. |
 | instance_sg_id | Created security group for cluster instances. |
+| autoscaling_group_name | Created auto scaling group for cluster. |
+| autoscaling_policy_scaleIn_arn | Created auto scaling group policy for scaleIn. |
+| autoscaling_policy_scaleOut_arn | Created auto scaling group policy for scaleOut. |
 
 ## Automated checks
 Currently the automated checks are limited. In CI the following checks are done for the root and each example.
