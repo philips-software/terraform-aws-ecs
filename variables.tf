@@ -53,7 +53,7 @@ variable "subnet_ids" {
 
 // http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html
 variable "ecs_optimized_amis" {
-  description = "List with ecs optimized images per region, last updated on: 2018-06-30 (2018.03.a)."
+  description = "List with ecs optimized images per region, last updated on: 2018-08-31 (2018.03.e)."
   type        = "map"
 
   default = {
