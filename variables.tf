@@ -60,10 +60,10 @@ variable "ecs_optimized_amis" {
     us-east-1      = "ami-00129b193dc81bc31" # US East (N. Virginia)
     us-east-2      = "ami-028a9de0a7e353ed9" # US East (Ohio)
     us-west-1      = "ami-0d438d09af26c9583" # US West (N. California)
-    us-west-2      = "ami-00d4f478" # US West (Oregon)
-    ca-central-1   = "ami-192fa27d" # Canada (Central)
+    us-west-2      = "ami-00d4f478"          # US West (Oregon)
+    ca-central-1   = "ami-192fa27d"          # Canada (Central)
     eu-west-1      = "ami-0af844a965e5738db" # EU (Ireland)
-    eu-west-2      = "ami-a44db8c3" # EU (London)
+    eu-west-2      = "ami-a44db8c3"          # EU (London)
     eu-west-3      = "ami-07da674f0655ef4e1" # EU (Paris)
     eu-central-1   = "ami-0291ba887ba0d515f" # EU (Frankfurt)
     ap-northeast-1 = "ami-0041c416aa23033a2" # Asia Pacific (Tokyo)
@@ -72,7 +72,7 @@ variable "ecs_optimized_amis" {
     ap-southeast-2 = "ami-0092e55c70015d8c3" # Asia Pacific (Sydney)
     ap-south-1     = "ami-0c179ca015d301829" # Asia Pacific (Mumbai)
     sa-east-1      = "ami-0018ff8ee48970ac3" # South America (São Paulo)
-    us-gov-west-1  = "ami-c6079ba7" # GovCloud
+    us-gov-west-1  = "ami-c6079ba7"          # GovCloud
   }
 }
 
