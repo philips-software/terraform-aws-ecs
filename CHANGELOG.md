@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.3.0
+- Update default base images to 2018.03.e
+
 ## 1.2.0
 - Add a second, more advanced example.
 
@@ -27,6 +30,7 @@ https://github.com/philips-software/terraform-aws-ecs/tags/1.0.0
 - Renamed output variables
 - Update of ECS optimized AMI's
 
-[Unreleased]: https://github.com/philips-software/terraform-aws-ecs/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/philips-software/terraform-aws-ecs/compare/1.3.0...HEAD
+[1.3.0] https://github.com/philips-software/terraform-aws-ecscompare/1.2.0...1.3.0
 [1.2.0] https://github.com/philips-software/terraform-aws-ecscompare/1.1.0...1.2.0
 [1.1.0] https://github.com/philips-software/terraform-aws-ecscompare/1.0.0...1.1.0
