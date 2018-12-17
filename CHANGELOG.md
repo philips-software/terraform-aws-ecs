@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Update default base images to 2018.03.i
+
 ## 1.3.0
 - Update default base images to 2018.03.e
 

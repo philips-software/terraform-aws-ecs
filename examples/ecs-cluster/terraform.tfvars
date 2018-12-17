@@ -1,8 +1,8 @@
-key_name = "test-forest"
+key_name = "test-niek"
 
-environment = "forest"
+environment = "niek"
 
-project = "test"
+project = "play"
 
 aws_region = "eu-west-1"
 
