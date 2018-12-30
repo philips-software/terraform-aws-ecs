@@ -21,7 +21,7 @@ data "null_data_source" "asg_tags" {
 
 resource "aws_autoscaling_group" "ecs_instance" {
   name                      = "${var.environment}-ecs-cluster-as-group"
-  vpc_zone_identifier       = ["${split(",", var.subnet_ids)}"]
+  vpc_zone_identifier       = ["${var.subnet_ids}"]
   min_size                  = "${var.min_instance_count}"
   max_size                  = "${var.max_instance_count}"
   desired_capacity          = "${var.desired_instance_count}"
