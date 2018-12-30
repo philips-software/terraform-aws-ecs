@@ -32,7 +32,7 @@ resource "aws_autoscaling_group" "ecs_instance" {
 }
 
 resource "aws_launch_configuration" "ecs_instance" {
-  security_groups      = ["${aws_security_group.instance_sg.id}"]
+  security_groups      = ["${var.security_group_id}"]
   key_name             = "${var.key_name}"
   image_id             = "${lookup(var.ecs_optimized_amis, var.aws_region)}"
   user_data            = "${var.user_data}"
@@ -44,34 +44,6 @@ resource "aws_launch_configuration" "ecs_instance" {
   lifecycle {
     create_before_destroy = true
   }
-}
-
-resource "aws_security_group" "instance_sg" {
-  name        = "${var.environment}-ecs-cluster-sg"
-  description = "controls access to ecs-cluster instances"
-  vpc_id      = "${var.vpc_id}"
-
-  ingress {
-    protocol  = "tcp"
-    from_port = 0
-    to_port   = 65535
-
-    cidr_blocks = [
-      "${var.vpc_cidr}",
-    ]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = "${merge(map("Name", format("%s-ecs-cluster-sg", var.environment)),
-            map("Environment", format("%s", var.environment)),
-            map("Project", format("%s", var.project)),
-            var.tags)}"
 }
 
 ## ECS

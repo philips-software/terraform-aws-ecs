@@ -91,3 +91,8 @@ variable "tags" {
   description = "Map of tags to apply on the resources"
   default     = {}
 }
+
+variable "security_group_id" {
+    description = "AWS Security Group ID"
+    type        = "string"
+}
