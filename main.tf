@@ -46,5 +46,5 @@ resource "aws_launch_configuration" "ecs_instance" {
 }
 
 resource "aws_ecs_cluster" "main" {
-  name = "${cluster_name}"
+  name = "${var.cluster_name}"
 }
