@@ -4,7 +4,7 @@ terraform {
 
 # EC2
 locals {
-  asg_tags = "${merge(map("Name", format("%s-ecs", var.environment)),
+  asg_tags = "${merge(map("Name", format("%s-ecs", var.cluster_name)),
               map("Environment", format("%s", var.environment)),
               var.tags)}"
 }

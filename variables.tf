@@ -47,7 +47,7 @@ variable "desired_instance_count" {
 }
 
 variable "subnet_ids" {
-  type        = "string"
+  type        = "list"
   description = "List of subnets ids on which the instances will be launched."
 }
 
