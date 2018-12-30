@@ -100,3 +100,7 @@ variable "security_group_id" {
 variable "ecs_instance_role_name" {
     description = "IAM Role name of ECS instances"
 }
+
+variable "cluster_name" {
+    description = "ECS Cluster name"
+}
