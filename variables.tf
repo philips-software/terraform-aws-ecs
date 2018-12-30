@@ -76,11 +76,6 @@ variable "ecs_optimized_amis" {
   }
 }
 
-variable "project" {
-  description = "Project identifier"
-  type        = "string"
-}
-
 variable "user_data" {
   description = "The user-data for the ec2 instances"
   type        = "string"
