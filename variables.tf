@@ -96,3 +96,7 @@ variable "security_group_id" {
     description = "AWS Security Group ID"
     type        = "string"
 }
+
+variable "ecs_instance_role_name" {
+    description = "IAM Role name of ECS instances"
+}
