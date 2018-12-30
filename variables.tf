@@ -51,28 +51,28 @@ variable "subnet_ids" {
   description = "List of subnets ids on which the instances will be launched."
 }
 
-// http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html
+// https://docs.aws.amazon.com/AmazonECS/latest/developerguide/al2ami-get-latest.html
 variable "ecs_optimized_amis" {
   description = "List with ecs optimized images per region, last updated on: 2018-08-31 (2018.03.e)."
   type        = "map"
 
   default = {
-    us-east-1      = "ami-00129b193dc81bc31" # US East (N. Virginia)
-    us-east-2      = "ami-028a9de0a7e353ed9" # US East (Ohio)
-    us-west-1      = "ami-0d438d09af26c9583" # US West (N. California)
-    us-west-2      = "ami-00d4f478"          # US West (Oregon)
-    ca-central-1   = "ami-192fa27d"          # Canada (Central)
-    eu-west-1      = "ami-0af844a965e5738db" # EU (Ireland)
-    eu-west-2      = "ami-a44db8c3"          # EU (London)
-    eu-west-3      = "ami-07da674f0655ef4e1" # EU (Paris)
-    eu-central-1   = "ami-0291ba887ba0d515f" # EU (Frankfurt)
-    ap-northeast-1 = "ami-0041c416aa23033a2" # Asia Pacific (Tokyo)
-    ap-northeast-2 = "ami-047d2a61f94f862dc" # Asia Pacific (Seoul)
-    ap-southeast-1 = "ami-091bf462afdb02c60" # Asia Pacific (Singapore)
-    ap-southeast-2 = "ami-0092e55c70015d8c3" # Asia Pacific (Sydney)
-    ap-south-1     = "ami-0c179ca015d301829" # Asia Pacific (Mumbai)
-    sa-east-1      = "ami-0018ff8ee48970ac3" # South America (São Paulo)
-    us-gov-west-1  = "ami-c6079ba7"          # GovCloud
+    us-east-1      = "ami-0a6b7e0cc0b1f464f" # US East (N. Virginia)
+    us-east-2      = "ami-037a92bf1efdb11a2" # US East (Ohio)
+    us-west-1      = "ami-0184f498956de7db5" # US West (N. California)
+    us-west-2      = "ami-0c1f4871ebaae6d86"          # US West (Oregon)
+    ca-central-1   = "ami-02c80e9173258d289"          # Canada (Central)
+    eu-west-1      = "ami-0acc9f8be17a41897" # EU (Ireland)
+    eu-west-2      = "ami-0b5225210a12d9951"          # EU (London)
+    eu-west-3      = "ami-0caadc4f0db31a303" # EU (Paris)
+    eu-central-1   = "ami-055aa9664ef169e25" # EU (Frankfurt)
+    ap-northeast-1 = "ami-0c38293d60d98af86" # Asia Pacific (Tokyo)
+    ap-northeast-2 = "ami-0bdc871079baf9649" # Asia Pacific (Seoul)
+    ap-southeast-1 = "ami-0e28ff4e3f1776d86" # Asia Pacific (Singapore)
+    ap-southeast-2 = "ami-0eed1c915ea891aca" # Asia Pacific (Sydney)
+    ap-south-1     = "ami-0b7c3be99909df6ef" # Asia Pacific (Mumbai)
+    sa-east-1      = "ami-078146697425f25a7" # South America (São Paulo)
+    us-gov-west-1  = "ami-31b5d150"          # GovCloud
   }
 }
 
