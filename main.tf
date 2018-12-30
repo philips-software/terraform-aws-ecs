@@ -6,7 +6,6 @@ terraform {
 locals {
   asg_tags = "${merge(map("Name", format("%s-ecs", var.environment)),
               map("Environment", format("%s", var.environment)),
-              map("Project", format("%s", var.project)),
               var.tags)}"
 }
 
@@ -46,8 +45,6 @@ resource "aws_launch_configuration" "ecs_instance" {
   }
 }
 
-## ECS
-#
 resource "aws_ecs_cluster" "main" {
-  name = "${var.environment}-ecs-cluster"
+  name = "${var.cluster_name}"
 }
