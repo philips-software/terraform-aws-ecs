@@ -5,7 +5,8 @@ This [Terraform module]() creates a ECS container cluster in Amazon. Prerequisit
 
 The module creates a ECS cluster by default using one EC2 instance. No auto scaling is configured, currently scaling can only be done by change parameters, see examples below.
 
-*Note:* this modules requires terraform 0.8 or higher. Please see [the ECS example](examples/ecs-cluster/.terraform-version) for the current supported version.
+*Note:* Release 2.x contains the following backwards incompatible changes
+- Default ECS AMI is from now on the latest Amazon linux available at the time terraform is executed. The AMI version can be fixed by setting the filter variable: `ecs_ami_filter`, see the example below.
 
 ## Examples
 - [ECS cluster basic](examples/ecs-cluster-advanced) - This examples combines the usage of the VPC module, ECS cluster (this module), ECS service module, centralized logging.
@@ -46,6 +47,12 @@ module "ecs-cluster" {
     tags = {
       my-tag = "my-tag-value"
     }
+
+    # Select the AMI for ECS instances
+    ecs_ami_filter = [{
+      name   = "name"
+      values = ["amzn-ami-2018.09.i-amazon-ecs-optimized"]
+    }]
 
 }
 
