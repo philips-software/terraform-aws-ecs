@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-- Update default base images to 2018.03.i
+- Changed: (Breaking change) The default ECS image is changed to the latest amazon linux2 ami available at the time the terraform script is running. To ensure the version is fixed, provide the filter variable with to select an ami. See the [readme][README.md] for more details
 
 ## 1.3.0
 - Update default base images to 2018.03.e
