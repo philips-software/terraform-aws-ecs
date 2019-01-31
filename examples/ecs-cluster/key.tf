@@ -18,5 +18,5 @@ resource "local_file" "private_ssh_key" {
 
 resource "aws_key_pair" "key" {
   key_name   = "${var.key_name}"
-  public_key = "${file("${var.public_key_file}")}"
+  public_key = "${local_file.public_ssh_key.content}"
 }

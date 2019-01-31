@@ -63,10 +63,19 @@ resource "aws_autoscaling_policy" "scaleIn" {
   autoscaling_group_name    = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
 }
 
+data "aws_ami" "ecs" {
+  most_recent = "${var.ecs_ami_latest}"
+
+  filter = "${var.ecs_ami_filter}"
+
+  owners = ["${var.ecs_ami_owners}"]
+}
+
 resource "aws_launch_configuration" "ecs_instance" {
-  security_groups      = ["${aws_security_group.instance_sg.id}"]
-  key_name             = "${var.key_name}"
-  image_id             = "${lookup(var.ecs_optimized_amis, var.aws_region)}"
+  security_groups = ["${aws_security_group.instance_sg.id}"]
+  key_name        = "${var.key_name}"
+  image_id        = "${data.aws_ami.ecs.id}"
+
   user_data            = "${var.user_data}"
   instance_type        = "${var.instance_type}"
   iam_instance_profile = "${aws_iam_instance_profile.ecs_instance.name}"

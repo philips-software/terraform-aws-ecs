@@ -5,6 +5,7 @@ This example shows the usages of the ECS cluster. The example will deploy one co
 - Running one simple service
 - Philips VPC module usages
 - Service (container) logs are available in cloudwatch
+- AMI filter used to select AMI
 
 ## Prerequisites for running the example
 Terraform is managed via the tool `tfenv`. Ensure you have installed [tfenv](https://github.com/kamatama41/tfenv). And install via tfenv the required terraform version as listed in `.terraform-version`

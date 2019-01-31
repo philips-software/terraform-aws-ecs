@@ -27,3 +27,10 @@ variable "public_key_file" {
 variable "private_key_file" {
   default = "generated/id_rsa"
 }
+
+variable "filter" {
+  default = [{
+    name   = "name"
+    values = ["amzn2-ami-ecs-hvm-2.0.20181112-x86_64-ebs"]
+  }]
+}
