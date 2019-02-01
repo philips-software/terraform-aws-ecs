@@ -44,23 +44,23 @@ resource "aws_autoscaling_group" "ecs_instance" {
 }
 
 resource "aws_autoscaling_policy" "scaleOut" {
-  count                     = "${var.dynamic_scaling == "true" ? 1 : 0}"
-  name                      = "ScaleOut"
-  scaling_adjustment        = "${abs(var.dynamic_scaling_adjustment)}"
-  policy_type               = "SimpleScaling"
-  adjustment_type           = "ChangeInCapacity"
-  cooldown                  = 600
-  autoscaling_group_name    = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
+  count                  = "${var.dynamic_scaling == "true" ? 1 : 0}"
+  name                   = "ScaleOut"
+  scaling_adjustment     = "${abs(var.dynamic_scaling_adjustment)}"
+  policy_type            = "SimpleScaling"
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 600
+  autoscaling_group_name = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
 }
 
 resource "aws_autoscaling_policy" "scaleIn" {
-  count                     = "${var.dynamic_scaling == "true" ? 1 : 0}"
-  name                      = "ScaleIn"
-  scaling_adjustment        = "${-1 * abs(var.dynamic_scaling_adjustment)}"
-  policy_type               = "SimpleScaling"
-  adjustment_type           = "ChangeInCapacity"
-  cooldown                  = 120
-  autoscaling_group_name    = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
+  count                  = "${var.dynamic_scaling == "true" ? 1 : 0}"
+  name                   = "ScaleIn"
+  scaling_adjustment     = "${-1 * abs(var.dynamic_scaling_adjustment)}"
+  policy_type            = "SimpleScaling"
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 120
+  autoscaling_group_name = "${element(aws_autoscaling_group.ecs_instance_dynamic.*.name, count.index)}"
 }
 
 data "aws_ami" "ecs" {

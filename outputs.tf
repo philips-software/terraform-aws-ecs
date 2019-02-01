@@ -25,7 +25,8 @@ output "instance_sg_id" {
 
 output "autoscaling_group_name" {
   description = "Created auto scaling group for cluster."
-  value       = "${element(compact(concat(aws_autoscaling_group.ecs_instance.*.name,
+
+  value = "${element(compact(concat(aws_autoscaling_group.ecs_instance.*.name,
                                     aws_autoscaling_group.ecs_instance_dynamic.*.name)
                                     ), 0)}"
 }
