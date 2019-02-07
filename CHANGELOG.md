@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- Add policies to allow dynamic scaling
 
 - Changed: (Breaking change) The default ECS image is changed to the latest amazon linux2 ami available at the time the terraform script is running. To ensure the version is fixed, provide the filter variable with to select an ami. See the [readme][README.md] for more details
 
