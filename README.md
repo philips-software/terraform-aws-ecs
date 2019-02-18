@@ -5,7 +5,8 @@ This [Terraform module]() creates a ECS container cluster in Amazon. Prerequisit
 
 The module creates a ECS cluster by default using one EC2 instance. No auto scaling is configured, currently scaling can only be done by change parameters, see examples below.
 
-*Note:* this modules requires terraform 0.8 or higher. Please see [the ECS example](examples/ecs-cluster/.terraform-version) for the current supported version.
+*Note:* Release 1.4.0 contains the following backwards incompatible changes
+- Default ECS AMI is from now on the latest Amazon linux available at the time terraform is executed. The AMI version can be fixed by setting the filter variable: `ecs_ami_filter`, see the example below. Functional the change can be implemented backwards compatible by setting the filter to the image that you was using before the upgrade.
 
 ## Examples
 - [ECS cluster basic](examples/ecs-cluster-advanced) - This examples combines the usage of the VPC module, ECS cluster (this module), ECS service module, centralized logging.
@@ -47,6 +48,12 @@ module "ecs-cluster" {
       my-tag = "my-tag-value"
     }
 
+    # Select the AMI for ECS instances
+    ecs_ami_filter = [{
+      name   = "name"
+      values = ["amzn-ami-2018.09.i-amazon-ecs-optimized"]
+    }]
+
 }
 
 data "template_file" "ecs-instance-template" {
@@ -58,34 +65,44 @@ data "template_file" "ecs-instance-template" {
 }
 ```
 
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | aws_region | The Amazon region: currently North Virginia [us-east-1]. | string | - | yes |
 | desired_instance_count | The desired instance count in the cluster. | string | `1` | no |
-| ecs_optimized_amis | List with ecs optimized images per region, last updated on: 2018-01-19 (2017.09.g). | map | `<map>` | no |
+| ecs_ami_filter | The filter used to select the AMI for the ECS cluster. By default the the pattern `amzn2-ami-ecs-hvm-2.0.????????-x86_64-ebs` for the name is used. | list | `<list>` | no |
+| ecs_ami_latest | Indicator to use the latest avaiable in the the list of the AMI's for the ECS cluster. | string | `true` | no |
+| ecs_ami_owners | A list of owners used to select the AMI for the ECS cluster. | list | `<list>` | no |
+| ecs_optimized_type | Possible values | string | `amzn2` | no |
 | environment | Name of the environment; will be prefixed to all resources. | string | - | yes |
 | instance_type | The instance type used in the cluster. | string | - | yes |
 | key_name | The AWS keyname, used to create instances. | string | - | yes |
 | max_instance_count | The maximum instance count in the cluster. | string | `1` | no |
 | min_instance_count | The minimal instance count in the cluster. | string | `1` | no |
 | project | Project identifier | string | - | yes |
+| dynamic_scaling | Enable/disable dynamic scaling of the auto scaling group. | string | 'false' | no |
+| dynamic_scaling_adjustment | The adjustment in number of instances for dynamic scaling. | string | '1' | no |
 | subnet_ids | List of subnets ids on which the instances will be launched. | string | - | yes |
+| tags | Map of tags to apply on the resources | map | `<map>` | no |
 | user_data | The user-data for the ec2 instances | string | - | yes |
 | vpc_cidr | The CIDR block of the VPC (e.g. 10.64.48.0/23). | string | - | yes |
 | vpc_id | The VPC to launch the instance in (e.g. vpc-66ecaa02). | string | - | yes |
-| tags | Map of tags to apply on the resources | map | <map> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
+| iam_instance_profile_arn | Created IAM instance profile. |
 | id | Id of the cluster. |
+| instance_sg_id | Created security group for cluster instances. |
 | name | Name of the cluster. |
 | service_role_name | Created IAM service role name. |
-| iam_instance_profile_arn | Created IAM instance profile arn. |
-| instance_sg_id | Created security group for cluster instances. |
+| autoscaling_group_name | Created auto scaling group for cluster. |
+| autoscaling_policy_scaleIn_arn | Created auto scaling group policy for scaleIn. |
+| autoscaling_policy_scaleOut_arn | Created auto scaling group policy for scaleOut. |
+
 
 ## Automated checks
 Currently the automated checks are limited. In CI the following checks are done for the root and each example.

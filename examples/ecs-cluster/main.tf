@@ -22,7 +22,8 @@ module "ecs-cluster" {
   max_instance_count     = "1"
   desired_instance_count = "1"
 
-  instance_type = "t2.micro"
+  ecs_ami_filter = ["${var.filter}"]
+  instance_type  = "t2.micro"
 
   subnet_ids = "${join(",", module.vpc.private_subnets)}"
 

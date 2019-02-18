@@ -33,3 +33,41 @@ resource "aws_cloudwatch_metric_alarm" "application_error_alarm" {
   treat_missing_data        = "notBreaching"
   insufficient_data_actions = []
 }
+
+resource "aws_cloudwatch_metric_alarm" "service_cpu_usage_high" {
+  alarm_name          = "CPUUtilization >= 90%"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "90"
+  treat_missing_data  = "notBreaching"
+
+  dimensions {
+    AutoScalingGroupName = "${module.ecs_cluster.autoscaling_group_name}"
+  }
+
+  alarm_description = "This metric monitors cpu utilization"
+  alarm_actions     = ["${module.ecs_cluster.autoscaling_policy_scaleOut_arn}"]
+}
+
+resource "aws_cloudwatch_metric_alarm" "service_cpu_usage_low" {
+  alarm_name          = "CPUUtilization < 30%"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "5"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "30"
+  treat_missing_data  = "notBreaching"
+
+  dimensions {
+    AutoScalingGroupName = "${module.ecs_cluster.autoscaling_group_name}"
+  }
+
+  alarm_description = "This metric monitors cpu utilization"
+  alarm_actions     = ["${module.ecs_cluster.autoscaling_policy_scaleIn_arn}"]
+}
