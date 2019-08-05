@@ -7,7 +7,10 @@ data "template_file" "ecs-instance-user-data" {
 }
 
 module "ecs_cluster" {
-  source    = "../../"
+  # source    = "../../"
+  source  = "philips-software/ecs/aws"
+  version = "1.4.0"
+
   user_data = "${data.template_file.ecs-instance-user-data.rendered}"
 
   aws_region  = "${var.aws_region}"

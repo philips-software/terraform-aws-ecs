@@ -1,7 +1,7 @@
 module "vpc" {
-  source  = "philips-software/vpc/aws"
-  version = "1.1.0"
+  source = "git::https://github.com/philips-software/terraform-aws-vpc.git?ref=terraform012"
 
-  environment = "${var.environment}"
-  aws_region  = "${var.aws_region}"
+  environment = var.environment
+  aws_region  = var.aws_region
 }
+
