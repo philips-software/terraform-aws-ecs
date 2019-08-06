@@ -1,6 +1,6 @@
 variable "aws_region" {
-  type        = string
   description = "The Amazon region: currently North Virginia [us-east-1]."
+  type        = string
 }
 
 variable "environment" {
@@ -9,18 +9,18 @@ variable "environment" {
 }
 
 variable "key_name" {
-  type        = string
   description = "The AWS keyname, used to create instances."
+  type        = string
 }
 
 variable "instance_type" {
-  type        = string
   description = "The instance type used in the cluster."
+  type        = string
 }
 
 variable "vpc_id" {
-  type        = string
   description = "The VPC to launch the instance in (e.g. vpc-66ecaa02)."
+  type        = string
 }
 
 variable "vpc_cidr" {
@@ -29,42 +29,41 @@ variable "vpc_cidr" {
 }
 
 variable "min_instance_count" {
-  type        = string
   description = "The minimal instance count in the cluster."
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "max_instance_count" {
-  type        = string
   description = "The maximum instance count in the cluster."
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "desired_instance_count" {
-  type        = string
   description = "The desired instance count in the cluster."
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "dynamic_scaling" {
-  type        = string
   description = "Enable/disable dynamic scaling of the auto scaling group."
-  default     = "false"
+  type        = bool
+  default     = false
 }
 
 variable "dynamic_scaling_adjustment" {
-  type        = string
   description = "The adjustment in number of instances for dynamic scaling."
-  default     = "1"
+  type        = number
+  default     = 1
 }
 
 variable "subnet_ids" {
-  type        = string
   description = "List of subnets ids on which the instances will be launched."
+  type        = string
 }
 
 // http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI_launch_latest.html
-
 variable "ecs_optimized_type" {
   description = "Possible values"
   default     = "amzn2"
@@ -84,6 +83,7 @@ variable "ecs_ami_filter" {
 
 variable "ecs_ami_latest" {
   description = "Indicator to use the latest avaiable in the the list of the AMI's for the ECS cluster."
+  type        = bool
   default     = true
 }
 
