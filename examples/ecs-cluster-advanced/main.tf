@@ -1,25 +1,23 @@
 data "template_file" "ecs-instance-user-data" {
-  template = "${file("${path.module}/user-data-ecs-cluster-instance.tpl")}"
+  template = file("${path.module}/user-data-ecs-cluster-instance.tpl")
 
-  vars {
-    ecs_cluster_name = "${module.ecs_cluster.name}"
+  vars = {
+    ecs_cluster_name = module.ecs_cluster.name
   }
 }
 
 module "ecs_cluster" {
-  # source    = "../../"
-  source  = "philips-software/ecs/aws"
-  version = "1.4.0"
+  source = "../../"
 
-  user_data = "${data.template_file.ecs-instance-user-data.rendered}"
+  user_data = data.template_file.ecs-instance-user-data.rendered
 
-  aws_region  = "${var.aws_region}"
-  environment = "${var.environment}"
+  aws_region  = var.aws_region
+  environment = var.environment
 
-  key_name = "${aws_key_pair.key.key_name}"
+  key_name = aws_key_pair.key.key_name
 
-  vpc_id   = "${module.vpc.vpc_id}"
-  vpc_cidr = "${module.vpc.vpc_cidr_block}"
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr_block
 
   min_instance_count     = "1"
   max_instance_count     = "2"
@@ -30,13 +28,14 @@ module "ecs_cluster" {
 
   instance_type = "t2.micro"
 
-  subnet_ids = "${join(",", module.vpc.private_subnets)}"
+  subnet_ids = join(",", module.vpc.private_subnets)
 
-  project = "${var.project}"
+  project = var.project
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 locals {
   service_name = "blog"
 }
+
