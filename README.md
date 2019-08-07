@@ -100,6 +100,18 @@ Currently the automated checks are limited. In CI the following checks are done 
 - lint: `terraform validate` and `terraform fmt`
 - basic init / get check: `terraform init -get -backend=false -input=false`
 
+## Automated checks
+Currently the automated checks are limited. In CI the following checks are done for the root and each example.
+- lint: `terraform validate` and `terraform fmt`
+- basic init / get check: `terraform init -get -backend=false -input=false`
+
+## Generation variable documentation
+A markdown table for variables can be generated as follow. Generation requires awk and terraform-docs installed.
+
+```
+ .ci/bin/terraform-docs.sh markdown
+```
+
 ## Philips Forest
 
 This module is part of the Philips Forest.
