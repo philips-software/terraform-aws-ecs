@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 TARGET_DIR=/opt
-PATH=${PATH}:${TARGET_DIR}
+PATH=${TARGET_DIR}:${PATH}
 
 TERRAFORM_VERSION=${1:-"0.11.11"}
 OS=${2:-"linux"}
