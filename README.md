@@ -1,5 +1,5 @@
 # Terraform module for creating a ecs cluster
-[![Build Status](https://travis-ci.com/philips-software/terraform-aws-ecs.svg?branch=develop)](https://travis-ci.com/philips-software/terraform-aws-ecs)
+![badge](https://action-badges.now.sh/philips-software/terraform-aws-ecs)
 
 This [Terraform module]() creates a ECS container cluster in Amazon. Prerequisite is to have a a VPC available. The VPC can be create via the official verified [AWS VPC module](https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/1.37.0), or via the our own [VPC](https://github.com/philips-software/terraform-aws-vpc) module.
 
