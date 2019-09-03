@@ -1,22 +1,22 @@
 variable "aws_region" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "project" {
   description = "Project identifier"
-  type        = "string"
+  type        = string
 }
 
 variable "key_name" {
-  type = "string"
+  type = string
 }
 
 variable "tags" {
-  type    = "map"
+  type    = map(string)
   default = {}
 }
 
@@ -27,3 +27,4 @@ variable "public_key_file" {
 variable "private_key_file" {
   default = "generated/id_rsa"
 }
+

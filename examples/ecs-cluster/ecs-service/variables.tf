@@ -1,13 +1,23 @@
-variable "vpc_id" {}
-variable "public_subnets" {}
-variable "ecs_service_role_name" {}
-variable "cluster_id" {}
+variable "vpc_id" {
+}
 
-variable "aws_region" {}
+variable "public_subnets" {
+}
 
-variable "environment" {}
+variable "ecs_service_role_name" {
+}
 
-variable "service_name" {}
+variable "cluster_id" {
+}
+
+variable "aws_region" {
+}
+
+variable "environment" {
+}
+
+variable "service_name" {
+}
 
 variable "alb_port" {
   default = "80"
@@ -36,3 +46,4 @@ variable "container_memory_reservation" {
 variable "image_url" {
   default = "npalm/040code.github.io:latest"
 }
+

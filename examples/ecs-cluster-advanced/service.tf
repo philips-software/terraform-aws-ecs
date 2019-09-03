@@ -1,21 +1,20 @@
 module "blog" {
-  source  = "philips-software/ecs-service/aws"
-  version = "1.0.0"
+  source = "git::https://github.com/philips-software/terraform-aws-ecs-service.git?ref=terraform012"
 
-  environment = "${var.environment}"
-  project     = "${var.project}"
+  environment = var.environment
+  project     = var.project
 
-  ecs_cluster_id   = "${module.ecs_cluster.id}"
-  ecs_cluster_name = "${module.ecs_cluster.name}"
+  ecs_cluster_id   = module.ecs_cluster.id
+  ecs_cluster_name = module.ecs_cluster.name
   docker_image     = "npalm/040code.github.io"
-  service_name     = "${local.service_name}"
+  service_name     = local.service_name
 
   // ALB part, over http without dns entry
-  ecs_service_role      = "${module.ecs_cluster.service_role_name}"
+  ecs_service_role      = module.ecs_cluster.service_role_name
   enable_alb            = true
   internal_alb          = false
-  vpc_id                = "${module.vpc.vpc_id}"
-  subnet_ids            = "${join(",", module.vpc.public_subnets)}"
+  vpc_id                = module.vpc.vpc_id
+  subnet_ids            = module.vpc.public_subnets
   alb_port              = 80
   alb_protocol          = "HTTP"
   container_ssl_enabled = false
@@ -26,7 +25,7 @@ module "blog" {
 
   // Monitoring settings, disabled
   enable_monitoring        = true
-  monitoring_sns_topic_arn = "${aws_sns_topic.monitoring.arn}"
+  monitoring_sns_topic_arn = aws_sns_topic.monitoring.arn
 
   // Enables logging to other targets (default is STDOUT)
   // For CloudWatch logging, make sure the awslogs-group exists
@@ -39,5 +38,8 @@ module "blog" {
           "awslogs-stream-prefix": "${local.service_name}"
         }
       }
-    EOF
+
+EOF
+
 }
+

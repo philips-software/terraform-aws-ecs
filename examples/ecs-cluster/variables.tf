@@ -1,22 +1,22 @@
 variable "aws_region" {
-  type = "string"
+  type = string
 }
 
 variable "environment" {
-  type = "string"
+  type = string
 }
 
 variable "project" {
   description = "Project identifier"
-  type        = "string"
+  type        = string
 }
 
 variable "key_name" {
-  type = "string"
+  type = string
 }
 
 variable "tags" {
-  type    = "map"
+  type    = map(string)
   default = {}
 }
 
@@ -29,8 +29,11 @@ variable "private_key_file" {
 }
 
 variable "filter" {
-  default = [{
-    name   = "name"
-    values = ["amzn2-ami-ecs-hvm-2.0.20181112-x86_64-ebs"]
-  }]
+  default = [
+    {
+      name   = "name"
+      values = "amzn2-ami-ecs-hvm-2.0.20181112-x86_64-ebs"
+    },
+  ]
 }
+
