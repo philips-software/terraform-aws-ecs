@@ -1,39 +1,41 @@
 data "template_file" "ecs-instance-user-data" {
-  template = "${file("${path.module}/user-data-ecs-cluster-instance.tpl")}"
+  template = file("${path.module}/user-data-ecs-cluster-instance.tpl")
 
-  vars {
-    ecs_cluster_name = "${module.ecs_cluster.name}"
+  vars = {
+    ecs_cluster_name = module.ecs_cluster.name
   }
 }
 
 module "ecs_cluster" {
-  source    = "../../"
-  user_data = "${data.template_file.ecs-instance-user-data.rendered}"
+  source = "../../"
 
-  aws_region  = "${var.aws_region}"
-  environment = "${var.environment}"
+  user_data = data.template_file.ecs-instance-user-data.rendered
 
-  key_name = "${aws_key_pair.key.key_name}"
+  aws_region  = var.aws_region
+  environment = var.environment
 
-  vpc_id   = "${module.vpc.vpc_id}"
-  vpc_cidr = "${module.vpc.vpc_cidr_block}"
+  key_name = aws_key_pair.key.key_name
 
-  min_instance_count     = "1"
-  max_instance_count     = "2"
-  desired_instance_count = "1"
+  vpc_id   = module.vpc.vpc_id
+  vpc_cidr = module.vpc.vpc_cidr_block
 
-  dynamic_scaling            = "true"
-  dynamic_scaling_adjustment = "1"
+  min_instance_count     = 1
+  max_instance_count     = 2
+  desired_instance_count = 1
+
+  dynamic_scaling            = true
+  dynamic_scaling_adjustment = 1
 
   instance_type = "t2.micro"
 
-  subnet_ids = "${join(",", module.vpc.private_subnets)}"
+  subnet_ids = join(",", module.vpc.private_subnets)
 
-  project = "${var.project}"
+  project = var.project
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 locals {
   service_name = "blog"
 }
+
