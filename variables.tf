@@ -28,6 +28,12 @@ variable "vpc_cidr" {
   type        = string
 }
 
+variable "additional_cidr_blocks" {
+  description = "Additional CIDR blocks that will be whitelisted within the VPC next to the VPC's CIDR block. Default is an empty list."
+  type        = list
+  default     = []
+}
+
 variable "min_instance_count" {
   description = "The minimal instance count in the cluster."
   type        = number
