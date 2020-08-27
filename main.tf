@@ -193,3 +193,8 @@ resource "aws_iam_role_policy" "ecs_instance" {
   policy = data.template_file.instance_profile.rendered
 }
 
+resource "aws_iam_role_policy_attachment" "ecs_instance" {
+  role       = aws_iam_role.ecs_instance.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
