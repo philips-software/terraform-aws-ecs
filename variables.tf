@@ -52,6 +52,12 @@ variable "dynamic_scaling" {
   default     = false
 }
 
+variable "enable_session_manager" {
+  description = "Enable/disable aws session manager support (i.e remote access to instance in VPC using secure tunnel)."
+  type        = bool
+  default     = false
+}
+
 variable "dynamic_scaling_adjustment" {
   description = "The adjustment in number of instances for dynamic scaling."
   type        = number
