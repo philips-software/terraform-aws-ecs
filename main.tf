@@ -196,6 +196,5 @@ resource "aws_iam_role_policy" "ecs_instance" {
 resource "aws_iam_role_policy_attachment" "ecs_instance" {
   role       = aws_iam_role.ecs_instance.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
-  count      = var.enable_session_manager == "true" ? 1 : 0
 }
 
