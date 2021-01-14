@@ -25,7 +25,7 @@ data "null_data_source" "asg_tags" {
 }
 
 resource "aws_autoscaling_group" "ecs_instance_dynamic" {
-  count                     = var.dynamic_scaling == "true" ? 1 : 0
+  count                     = var.dynamic_scaling ? 1 : 0
   name                      = "${var.environment}-ecs-cluster-as-group"
   vpc_zone_identifier       = split(",", var.subnet_ids)
   min_size                  = var.min_instance_count
@@ -36,7 +36,7 @@ resource "aws_autoscaling_group" "ecs_instance_dynamic" {
 }
 
 resource "aws_autoscaling_group" "ecs_instance" {
-  count                     = var.dynamic_scaling == "true" ? 0 : 1
+  count                     = var.dynamic_scaling ? 0 : 1
   name                      = "${var.environment}-ecs-cluster-as-group"
   vpc_zone_identifier       = split(",", var.subnet_ids)
   min_size                  = var.min_instance_count
@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "ecs_instance" {
 }
 
 resource "aws_autoscaling_policy" "scaleOut" {
-  count              = var.dynamic_scaling == "true" ? 1 : 0
+  count              = var.dynamic_scaling ? 1 : 0
   name               = "ScaleOut"
   scaling_adjustment = abs(var.dynamic_scaling_adjustment)
   policy_type        = "SimpleScaling"
@@ -61,7 +61,7 @@ resource "aws_autoscaling_policy" "scaleOut" {
 }
 
 resource "aws_autoscaling_policy" "scaleIn" {
-  count              = var.dynamic_scaling == "true" ? 1 : 0
+  count              = var.dynamic_scaling ? 1 : 0
   name               = "ScaleIn"
   scaling_adjustment = -1 * abs(var.dynamic_scaling_adjustment)
   policy_type        = "SimpleScaling"
@@ -114,19 +114,17 @@ resource "aws_security_group" "instance_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    protocol  = "tcp"
+    protocol  = "-1"
     from_port = 0
-    to_port   = 65535
+    to_port   = 0
 
-    cidr_blocks = [
-      var.vpc_cidr,
-    ]
+    cidr_blocks = concat([var.vpc_cidr], var.additional_cidr_blocks)
   }
 
   egress {
     from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -191,5 +189,11 @@ resource "aws_iam_role_policy" "ecs_instance" {
   name   = "${var.environment}-ecs-instance-role"
   role   = aws_iam_role.ecs_instance.name
   policy = data.template_file.instance_profile.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_instance" {
+  role       = aws_iam_role.ecs_instance.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+  count      = var.enable_session_manager ? 1 : 0
 }
 

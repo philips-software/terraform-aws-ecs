@@ -28,6 +28,12 @@ variable "vpc_cidr" {
   type        = string
 }
 
+variable "additional_cidr_blocks" {
+  description = "Additional CIDR blocks that will be whitelisted within the VPC next to the VPC's CIDR block. Default is an empty list."
+  type        = list
+  default     = []
+}
+
 variable "min_instance_count" {
   description = "The minimal instance count in the cluster."
   type        = number
@@ -48,6 +54,12 @@ variable "desired_instance_count" {
 
 variable "dynamic_scaling" {
   description = "Enable/disable dynamic scaling of the auto scaling group."
+  type        = bool
+  default     = false
+}
+
+variable "enable_session_manager" {
+  description = "Enable/disable aws session manager support (i.e remote access to instance in VPC using secure tunnel)."
   type        = bool
   default     = false
 }
