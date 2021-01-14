@@ -6,10 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
-- Added session manager support to ecs instance role
 
-- Allow all types of traffic within VPC instead of only TCP
-- Add variable `additional_cidr_blocks` to whitelist extra CIDR blocks within VPC
+## 2.1.0
+
+- Fix: Fix boolean (#24) by @Laugslander
+- Added: session manager support to ecs instance role
+- Added: Allow all types of traffic within VPC instead of only TCP
+- Added: Add variable `additional_cidr_blocks` to whitelist extra CIDR blocks within VPC
 
 ### Changed
 
@@ -52,8 +55,9 @@ https://github.com/philips-software/terraform-aws-ecs/tags/1.0.0
 - Renamed output variables
 - Update of ECS optimized AMI's
 
-[unreleased]: https://github.com/philips-software/terraform-aws-ecs/compare/2..0...HEAD
+[unreleased]: https://github.com/philips-software/terraform-aws-ecs/compare/2.1.0...HEAD
 
+[2.1.0] https://github.com/philips-software/terraform-aws-ecscompare/2.0.0...2.1.0
 [2.0.0] https://github.com/philips-software/terraform-aws-ecscompare/1.4.0...2.0.0
 [1.4.0] https://github.com/philips-software/terraform-aws-ecscompare/1.3.0...1.4.0
 [1.3.0] https://github.com/philips-software/terraform-aws-ecscompare/1.2.0...1.3.0
