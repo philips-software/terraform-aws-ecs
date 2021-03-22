@@ -27,9 +27,9 @@ resource "aws_autoscaling_group" "ecs_instance_dynamic" {
     for_each = local.asg_tags
 
     content {
-      key                 =  tag.key
-      value               =  tag.value
-      propagate_at_launch =  true
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
     }
   }
 }
@@ -48,9 +48,9 @@ resource "aws_autoscaling_group" "ecs_instance" {
     for_each = local.asg_tags
 
     content {
-      key                 =  tag.key
-      value               =  tag.value
-      propagate_at_launch =  true
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
     }
   }
 }
