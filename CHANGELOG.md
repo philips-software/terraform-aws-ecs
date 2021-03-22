@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Replaced deprecated `null_data_resource` with dynamic nested blocks
+
 ## 2.1.0
 
 - Fix: Fix boolean (#24) by @Laugslander
