@@ -14,16 +14,6 @@ locals {
   )
 }
 
-data "null_data_source" "asg_tags" {
-  count = length(local.asg_tags)
-
-  inputs = {
-    key                 = element(keys(local.asg_tags), count.index)
-    value               = element(values(local.asg_tags), count.index)
-    propagate_at_launch = "true"
-  }
-}
-
 resource "aws_autoscaling_group" "ecs_instance_dynamic" {
   count                     = var.dynamic_scaling ? 1 : 0
   name                      = "${var.environment}-ecs-cluster-as-group"
@@ -32,7 +22,16 @@ resource "aws_autoscaling_group" "ecs_instance_dynamic" {
   max_size                  = var.max_instance_count
   health_check_grace_period = 300
   launch_configuration      = aws_launch_configuration.ecs_instance.name
-  tags                      = data.null_data_source.asg_tags.*.outputs
+
+  dynamic "tag" {
+    for_each = local.asg_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
 }
 
 resource "aws_autoscaling_group" "ecs_instance" {
@@ -44,7 +43,16 @@ resource "aws_autoscaling_group" "ecs_instance" {
   desired_capacity          = var.desired_instance_count
   health_check_grace_period = 300
   launch_configuration      = aws_launch_configuration.ecs_instance.name
-  tags                      = data.null_data_source.asg_tags.*.outputs
+
+  dynamic "tag" {
+    for_each = local.asg_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
+  }
 }
 
 resource "aws_autoscaling_policy" "scaleOut" {
