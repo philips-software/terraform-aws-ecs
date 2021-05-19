@@ -93,7 +93,7 @@ data "aws_ami" "ecs" {
       # this after confirming which keys can be set in practice.
 
       name   = filter.value["name"]
-      values = tolist(filter.value["values"])
+      values = tolist([filter.value["values"]])
     }
   }
 
