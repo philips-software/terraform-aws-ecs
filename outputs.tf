@@ -5,7 +5,7 @@ output "id" {
 
 output "name" {
   description = "Name of the cluster."
-  value       = aws_ecs_cluster.main.name
+  value       = local.cluster_name
 }
 
 output "service_role_name" {
@@ -26,15 +26,13 @@ output "instance_sg_id" {
 output "autoscaling_group_name" {
   description = "Created auto scaling group for cluster."
 
-  value = element(
-    compact(
-      concat(
-        aws_autoscaling_group.ecs_instance.*.name,
-        aws_autoscaling_group.ecs_instance_dynamic.*.name,
-      ),
-    ),
-    0,
-  )
+  value = aws_autoscaling_group.ecs_instance.name
+}
+
+output "autoscaling_group_arn" {
+  description = "Created auto scaling group for cluster."
+
+  value = aws_autoscaling_group.ecs_instance.arn
 }
 
 output "autoscaling_policy_scaleIn_arn" {
@@ -47,3 +45,7 @@ output "autoscaling_policy_scaleOut_arn" {
   value       = join("", aws_autoscaling_policy.scaleOut.*.arn)
 }
 
+output "capacity_provider" {
+  description = "Name of the capacity provider"
+  value = join("", aws_ecs_capacity_provider.scaling.*.name)
+}

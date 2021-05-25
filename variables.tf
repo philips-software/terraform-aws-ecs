@@ -115,6 +115,12 @@ variable "user_data" {
   type        = string
 }
 
+variable "ec2_scaling_target_capacity" {
+  description = "Target capacity for automatic ec2 scaling, 0 means disabled"
+  type        = number
+  default     = 0
+}
+
 variable "tags" {
   type        = map(string)
   description = "Map of tags to apply on the resources"

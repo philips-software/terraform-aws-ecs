@@ -12,37 +12,19 @@ locals {
     },
     var.tags,
   )
-}
 
-resource "aws_autoscaling_group" "ecs_instance_dynamic" {
-  count                     = var.dynamic_scaling ? 1 : 0
-  name                      = "${var.environment}-ecs-cluster-as-group"
-  vpc_zone_identifier       = split(",", var.subnet_ids)
-  min_size                  = var.min_instance_count
-  max_size                  = var.max_instance_count
-  health_check_grace_period = 300
-  launch_configuration      = aws_launch_configuration.ecs_instance.name
-
-  dynamic "tag" {
-    for_each = local.asg_tags
-
-    content {
-      key                 = tag.key
-      value               = tag.value
-      propagate_at_launch = true
-    }
-  }
+  cluster_name = "${var.environment}-ecs-cluster"
 }
 
 resource "aws_autoscaling_group" "ecs_instance" {
-  count                     = var.dynamic_scaling ? 0 : 1
   name                      = "${var.environment}-ecs-cluster-as-group"
   vpc_zone_identifier       = split(",", var.subnet_ids)
   min_size                  = var.min_instance_count
   max_size                  = var.max_instance_count
-  desired_capacity          = var.desired_instance_count
+  desired_capacity          = var.dynamic_scaling ? null : var.desired_instance_count
   health_check_grace_period = 300
   launch_configuration      = aws_launch_configuration.ecs_instance.name
+  protect_from_scale_in     = var.ec2_scaling_target_capacity > 0 ? true : false
 
   dynamic "tag" {
     for_each = local.asg_tags
@@ -56,29 +38,23 @@ resource "aws_autoscaling_group" "ecs_instance" {
 }
 
 resource "aws_autoscaling_policy" "scaleOut" {
-  count              = var.dynamic_scaling ? 1 : 0
+  count              = var.dynamic_scaling && var.ec2_scaling_target_capacity == 0 ? 1 : 0
   name               = "ScaleOut"
   scaling_adjustment = abs(var.dynamic_scaling_adjustment)
   policy_type        = "SimpleScaling"
   adjustment_type    = "ChangeInCapacity"
   cooldown           = 600
-  autoscaling_group_name = element(
-    aws_autoscaling_group.ecs_instance_dynamic.*.name,
-    count.index,
-  )
+  autoscaling_group_name = aws_autoscaling_group.ecs_instance.name
 }
 
 resource "aws_autoscaling_policy" "scaleIn" {
-  count              = var.dynamic_scaling ? 1 : 0
+  count              = var.dynamic_scaling && var.ec2_scaling_target_capacity == 0 ? 1 : 0
   name               = "ScaleIn"
   scaling_adjustment = -1 * abs(var.dynamic_scaling_adjustment)
   policy_type        = "SimpleScaling"
   adjustment_type    = "ChangeInCapacity"
   cooldown           = 120
-  autoscaling_group_name = element(
-    aws_autoscaling_group.ecs_instance_dynamic.*.name,
-    count.index,
-  )
+  autoscaling_group_name = aws_autoscaling_group.ecs_instance.name
 }
 
 data "aws_ami" "ecs" {
@@ -153,7 +129,33 @@ resource "aws_security_group" "instance_sg" {
 ## ECS
 #
 resource "aws_ecs_cluster" "main" {
-  name = "${var.environment}-ecs-cluster"
+  name = local.cluster_name
+
+  capacity_providers = aws_ecs_capacity_provider.scaling.*.name
+
+  dynamic "default_capacity_provider_strategy" {
+    for_each = {for p in aws_ecs_capacity_provider.scaling: p.name => p}
+    content {
+      capacity_provider = default_capacity_provider_strategy.key
+      weight = 1
+    }
+  }
+}
+
+
+resource "aws_ecs_capacity_provider" "scaling" {
+  count = var.ec2_scaling_target_capacity > 0 ? 1 : 0
+  name = "EC2_scaling"
+
+  auto_scaling_group_provider {
+    auto_scaling_group_arn         = aws_autoscaling_group.ecs_instance.arn
+    managed_termination_protection = "ENABLED"
+
+    managed_scaling {
+      status                    = "ENABLED"
+      target_capacity           = var.ec2_scaling_target_capacity
+    }
+  }
 }
 
 data "template_file" "service_role_trust_policy" {
