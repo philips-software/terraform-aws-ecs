@@ -126,7 +126,15 @@ resource "aws_security_group" "instance_sg" {
     from_port = 0
     to_port   = 0
 
-    cidr_blocks = concat([var.vpc_cidr], var.additional_cidr_blocks)
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  ingress {
+    protocol  = var.additional_ingress_protocol
+    from_port = var.additional_ingress_port
+    to_port   = var.additional_ingress_port
+
+    cidr_blocks = var.additional_cidr_blocks
   }
 
   egress {

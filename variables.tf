@@ -34,6 +34,18 @@ variable "additional_cidr_blocks" {
   default     = []
 }
 
+variable "additional_ingress_protocol" {
+  description = "Additional ingress protocol."
+  type        = string
+  default     = "-1"
+}
+
+variable "additional_ingress_port" {
+  description = "Additional ingress port."
+  type        = number
+  default     = 0
+}
+
 variable "min_instance_count" {
   description = "The minimal instance count in the cluster."
   type        = number
@@ -120,4 +132,3 @@ variable "tags" {
   description = "Map of tags to apply on the resources"
   default     = {}
 }
-
