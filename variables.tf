@@ -34,16 +34,15 @@ variable "additional_cidr_blocks" {
   default     = []
 }
 
-variable "additional_ingress_protocol" {
-  description = "Additional ingress protocol."
-  type        = string
-  default     = "-1"
-}
-
-variable "additional_ingress_port" {
-  description = "Additional ingress port."
-  type        = number
-  default     = 0
+variable "additional_ingress" {
+  description = "Additional VPC ingress. Default is an empty list."
+  type        = list(object({
+    protocol    = string
+    from_port   = number
+    from_port   = number
+    cidr_blocks = list(string)
+  }))
+  default = []
 }
 
 variable "min_instance_count" {

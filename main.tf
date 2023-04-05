@@ -126,15 +126,19 @@ resource "aws_security_group" "instance_sg" {
     from_port = 0
     to_port   = 0
 
-    cidr_blocks = [var.vpc_cidr]
+    cidr_blocks = [var.vpc_cidr, var.additional_cidr_blocks]
   }
 
-  ingress {
-    protocol  = var.additional_ingress_protocol
-    from_port = var.additional_ingress_port
-    to_port   = var.additional_ingress_port
+  dynamic ingress {
+    for_each = var.additional_ingress
 
-    cidr_blocks = var.additional_cidr_blocks
+    content {
+        protocol  = ingress.value.protocol
+        from_port = ingress.value.from_port
+        to_port   = ingress.value.to_port
+
+        cidr_blocks = ingress.value.cidr_blocks
+    }
   }
 
   egress {
