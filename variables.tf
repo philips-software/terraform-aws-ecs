@@ -30,7 +30,7 @@ variable "vpc_cidr" {
 
 variable "additional_cidr_blocks" {
   description = "Additional CIDR blocks that will be whitelisted within the VPC next to the VPC's CIDR block. Default is an empty list."
-  type        = list(any)
+  type        = list(string)
   default     = []
 }
 
