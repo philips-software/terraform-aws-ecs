@@ -83,6 +83,7 @@ resource "aws_autoscaling_policy" "scaleIn" {
 
 data "aws_ami" "ecs" {
   most_recent = var.ecs_ami_latest
+  include_deprecated = var.ecs_ami_include_deprecated
 
   dynamic "filter" {
     for_each = var.ecs_ami_filter

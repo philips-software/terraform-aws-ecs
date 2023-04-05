@@ -94,9 +94,15 @@ variable "ecs_ami_filter" {
 }
 
 variable "ecs_ami_latest" {
-  description = "Indicator to use the latest avaiable in the the list of the AMI's for the ECS cluster."
+  description = "Indicator to use the latest available in the the list of the AMI's for the ECS cluster."
   type        = bool
   default     = true
+}
+
+variable "ecs_ami_include_deprecated" {
+  description = "If true, all deprecated AMIs are included in the response. If false, no deprecated AMIs are included in the response."
+  type        = bool
+  default     = false
 }
 
 variable "ecs_ami_owners" {
