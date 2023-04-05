@@ -30,13 +30,13 @@ variable "vpc_cidr" {
 
 variable "additional_cidr_blocks" {
   description = "Additional CIDR blocks that will be whitelisted within the VPC next to the VPC's CIDR block. Default is an empty list."
-  type        = list
+  type        = list(any)
   default     = []
 }
 
 variable "additional_ingress" {
   description = "Additional VPC ingress. Default is an empty list."
-  type        = list(object({
+  type = list(object({
     protocol    = string
     from_port   = number
     from_port   = number
