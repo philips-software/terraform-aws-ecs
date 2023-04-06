@@ -39,7 +39,7 @@ variable "additional_ingress" {
   type = list(object({
     protocol    = string
     from_port   = number
-    from_port   = number
+    to_port     = number
     cidr_blocks = list(string)
   }))
   default = []
